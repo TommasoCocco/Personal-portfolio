@@ -1,0 +1,80 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-Regular.woff2') format('woff2'),
+       url('fonts/Inter-Regular.woff') format('woff');
+  font-weight: 400; /* puoi aggiungere altri pesi se necessario */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Inter-Black";
+  src: url("/Inter/static/Inter_18pt-Black.ttf");
+}
+
+@font-face {
+  font-family: "Inter-Semibold";
+  src: url("/Inter/static/Inter_18pt-SemiBold.ttf");
+}
+
+h1{
+  color: #dbf228;
+  font-family: "Inter-Black", Helvetica;
+  font-size: 1.5em;
+  font-weight: 900;
+  letter-spacing: -1.28px;
+  line-height: 50px;
+  padding: 0;
+  margin: 0;
+}
+
+h4{
+  margin: 0;
+  padding: 0;
+  color: #dbf228;
+  font-family: "Inter-Black", Helvetica;
+  font-size: 5rem;
+  font-weight: 700;
+  letter-spacing: -2px;
+  line-height: 64px;
+  padding: 0;
+  margin: 0;
+}
+
+p{
+  color: #ebf2ea;
+  font-family: "Inter-Regular", Helvetica;
+  font-size: 1.6rem;
+  font-weight: 400;
+  letter-spacing: 0.48px;
+  line-height: 28px;
+}
+
+a{
+  text-decoration: none;
+}
+
+:root {
+  font-size: 62.5%; /* 62.5% di 16px = 10px */
+  font-family: 'Inter', sans-serif;
+}
+
+body{
+  padding: 0;
+  margin: 0;
+  min-width: 350px;
+}
+
+html {
+  scroll-behavior: smooth; /* Scorrimento fluido */
+  min-height: 800px;
+}
+
+
+@media screen and (min-width: 980px) {
+ 
+  h1{
+    font-size: 6.4rem;
+    line-height: 6.4rem;
+  }
+  
+}
