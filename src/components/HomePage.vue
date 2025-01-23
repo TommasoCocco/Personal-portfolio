@@ -286,6 +286,7 @@ onMounted(() => {
       color: #dbf228;
       align-items: flex-end;
       height: 130px;
+      width: 35rem;
 
     }
 
@@ -412,7 +413,7 @@ onMounted(() => {
         }
     }
     .container__btn{
-        bottom: 0rem;
+        display: none;
     }
 }
 
@@ -482,14 +483,6 @@ onMounted(() => {
     }
 }
 
-@media (max-height: 800px) {
-  .container {
-    &__btn {
-      display: none;
-    }
-   
-  }
-}
 
 @media all and (min-width: 768px) and (max-width: 991px){
     .container{
@@ -547,7 +540,7 @@ onMounted(() => {
 
 }
 
-@media (width > 1100px){
+@media (min-width: 1100px){
     .container{
         background: linear-gradient(90deg, #042940 60%, #015C53 100%);
         position: relative;
@@ -559,6 +552,7 @@ onMounted(() => {
         position: absolute;
         top: 22rem;
         left: 0;
+
     }
     
     .container__box{
@@ -567,7 +561,6 @@ onMounted(() => {
         align-items: center;
         justify-content: center;
         width: 80%;
-        height: 100dvh;
         gap: 5rem;
 
         &__container{
@@ -594,8 +587,8 @@ onMounted(() => {
         height: 40rem;
 
         & img{
-            height: 507px;
-            width: 500px;
+            height: 40rem;
+            width: 40rem;
         }
     }
 

@@ -205,7 +205,7 @@ const bounceEffect = (event) => {
 
     &__mail{
       display: flex;
-      background-color: #042940;
+      background-color: #dbf228;
       height: 5rem;
       width: 6rem;
       align-items: center;
@@ -214,13 +214,15 @@ const bounceEffect = (event) => {
       border-top-left-radius: 1rem;
       color: #EBF2EA;
 
-      & p {
+      & p{
         display: none;
+        color: #0d0d0d;
       }
 
       &__icon {
         height: 20px;
         width: 20px;
+        color: #0d0d0d;
       }
     }
   }
