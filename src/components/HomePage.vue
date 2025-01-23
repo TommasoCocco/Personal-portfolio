@@ -85,11 +85,11 @@ onMounted(() => {
 
 
 
-const beforeEnter = (el) => {
+const beforeEnter = (el:any) => {
   el.style.opacity = "0";
 }
 
-const enterTitle = (el) => {
+const enterTitle = (el:any) => {
   gsap.to(el, {
     clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)", // Stato finale (visibile)
     opacity: 1,
@@ -99,7 +99,7 @@ const enterTitle = (el) => {
   });
 };
 
-const enterSubtitle = (el) => {
+const enterSubtitle = (el:any) => {
   gsap.to(el, {
     opacity: 1,
     delay: 1.5,
@@ -108,12 +108,12 @@ const enterSubtitle = (el) => {
   })
 }
 
-const beforeEnterBtn = (el) => {
+const beforeEnterBtn = (el:any) => {
   el.style.opacity = "0";
   el.style.transform = "translateY(-10px)";
 }
 
-const enterBtn = (el) => {
+const enterBtn = (el:any) => {
   gsap.to(el, {
     y: 0,
     opacity: 1,
@@ -123,12 +123,12 @@ const enterBtn = (el) => {
   })
 }
 
-const beforeEnterImg = (el) => {
+const beforeEnterImg = (el:any) => {
   el.style.opacity = "0";
   el.style.transform = "translateX(-50px)";
 }
 
-const enterImg = (el) => {
+const enterImg = (el:any) => {
   gsap.to(el, {
     x:0,
     opacity: 1,
@@ -138,12 +138,12 @@ const enterImg = (el) => {
   })
 }
 
-const beforeEnterPhoto = (el) => {
+const beforeEnterPhoto = (el:any) => {
   el.style.opacity = "0";
   el.style.scale = "0.5";
 }
 
-const enterPhoto = (el) => {
+const enterPhoto = (el:any) => {
   gsap.to(el,{
     opacity: 1,
     scale: 1,

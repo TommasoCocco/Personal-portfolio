@@ -4,12 +4,12 @@ import { onMounted, ref } from 'vue';
 
 
 
-const beforeEnter = (el) => {
+const beforeEnter = (el:any) => {
   el.style.opacity = "0";
   el.style.transform = "translateX(-50px)"
 }
 
-const enterLine1 = (el) => {
+const enterLine1 = (el:any) => {
 gsap.to(el, {
   x:0,
   opacity: 1,
@@ -19,11 +19,11 @@ gsap.to(el, {
 })
 }
 
-const beforeEnterLine2 = (el) => {
+const beforeEnterLine2 = (el:any) => {
   el.style.opacity = "0";
   el.style.transform = "translateX(50px)"
 }
-const enterLine2 = (el) => {
+const enterLine2 = (el:any) => {
   gsap.to(el, {
     x:0,
     opacity: 1,
