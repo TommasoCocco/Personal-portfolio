@@ -2,8 +2,10 @@
 import Btn from "./Btn.vue"
 import { onMounted, onBeforeUnmount, ref } from 'vue';
 import gsap from "gsap";
+import { ScrollTrigger } from 'gsap/all';
 
-// Funzione per aggiornare il colore del logo
+gsap.registerPlugin(ScrollTrigger);
+
 const updateLogoColor = () => {
   const logo = document.querySelector('.logo') as HTMLElement;
   const worksSection = document.querySelector('#works') as HTMLElement;
@@ -43,19 +45,15 @@ onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll);
 });
 
-/* Funzione menu a tendina */
 const isMenuVisible = ref(false);
 const menuPanel = ref<HTMLElement | null>(null);
 
-// Funzione per alternare la visibilità del menu
 const toggleMenu = (event: MouseEvent) => {
-  event.stopPropagation(); // Impedisce la propagazione dell'evento di clic, così non si chiude il menu subito dopo l'apertura
+  event.stopPropagation(); 
   isMenuVisible.value = !isMenuVisible.value;
 };
 
-// Funzione per chiudere il menu se cliccato fuori
 const closeMenuIfClickedOutside = (event: MouseEvent) => {
-  // Verifica se il clic è stato effettuato fuori dal menu
   if (menuPanel.value && !menuPanel.value.contains(event.target as Node)) {
     isMenuVisible.value = false;
   }
@@ -65,37 +63,40 @@ const closeMenuBtn = (_event: MouseEvent) =>{
   isMenuVisible.value = false;
 }
 
-// Aggiungi il listener per il clic globale al montaggio del componente
 onMounted(() => {
   window.addEventListener('click', closeMenuIfClickedOutside);
 });
 
-// Rimuovi il listener al dismontaggio del componente
+
 onBeforeUnmount(() => {
   window.removeEventListener('click', closeMenuIfClickedOutside);
 });
 
 
-const beforeEnter = (el) => {
-  el.style.transform = 'translateY(-60px)'
+const beforeEnter = (el: any) => {
+  el.style.transform = 'translateY(-20px)';
   el.style.opacity = '0';
-}
+};
 
-const enter = (el) => {
+const enter = (el: any) => {
   gsap.to(el, { 
-    duration: 1, 
-    delay: 0.5,
-    opacity: 1, 
-    y: 0, 
-    ease: "bounce.out"
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    ease: "bounce.out",
+    scrollTrigger: {
+      trigger: el,
+      start: "top center",
+      toggleActions: "restart none restart none", 
+    },
   });
-}
+};
 
-const beforeEnterLogo = (el) => {
+const beforeEnterLogo = (el: any) => {
   el.style.opacity = '0';
 }
 
-const enterLogo = (el) => {
+const enterLogo = (el:any) => {
   gsap.to(el, {
     opacity: 1,
     delay: 0.5,
@@ -104,7 +105,7 @@ const enterLogo = (el) => {
   })
 }
 
-const bounceEffect = (event) => {
+const bounceEffect = (event: any) => {
   const el = event.currentTarget;
   gsap.to(el, {
     y: -5,
@@ -164,11 +165,11 @@ const bounceEffect = (event) => {
           
           <div class="containerLinks">
             <div class="links">
-              <RouterLink to="#home" @click="toggleMenu">Home</RouterLink>
-              <RouterLink to="#works" @click="toggleMenu">Works</RouterLink>
-              <RouterLink to="#about" @click="toggleMenu">About</RouterLink>
-              <RouterLink to="#mail" @click="toggleMenu">Mail</RouterLink>
-              <RouterLink to="#footer" @click="toggleMenu">Contacts</RouterLink>
+              <a href="#home" @click="toggleMenu">Home</a>
+              <a href="#works" @click="toggleMenu">Work</a>
+              <a href="#about" @click="toggleMenu">About me</a>
+              <a href="#mail" @click="toggleMenu">Mail</a>
+              <a href="#footer" @click="toggleMenu">Contact</a>
             </div>
           </div>
         </div>

@@ -1,32 +1,58 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/all';
 
-const beforeEnter = (el) => {
-  el.style.opacity = "0";
-}
+gsap.registerPlugin(ScrollTrigger);
 
-const enterTitle = (el) => {
-  gsap.to(el, {
-    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)", // Stato finale (visibile)
-    opacity: 1,
-    delay: 0.5,
-    duration: 1, // Durata della transizione
-    stagger: 0.5
+const setupLetterAnimation = () => {
+  const target = document.querySelector('#contactsText');
+  if (!target) return;
+
+  const text = target.textContent || '';
+  target.innerHTML = ''; 
+  const letters = text.split('');
+
+  letters.forEach((letter) => {
+    const span = document.createElement('span');
+    span.textContent = letter;
+    span.style.display = 'inline-block';
+    target.appendChild(span);
+  });
+
+
+  const spans = target.querySelectorAll('span');
+
+ 
+  gsap.from(spans, {
+    opacity: 0,
+    y: 10,
+    stagger: 0.1,
+    duration: 0.5,
+    delay:0.5,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: '#contactsText',
+      start: 'top 100%', 
+      end: 'bottom center',
+      toggleActions: 'restart none none none',
+    },
   });
 };
+
+onMounted(() => {
+  setupLetterAnimation();
+});
+
+
+
 </script>
 
 <template>
     <footer>
         <section class="container">
             <div class="contacts" id="footer">
-                <transition
-                appear 
-                @before-enter="beforeEnter"
-                @enter="enterTitle">
-                    <p class="contacts_text">CONTACTS</p>
-
-                </transition>
+                <p class="contacts_text" id="contactsText">CONTACTS</p>
                 <img src="/Component 3.svg" alt="" class="line">
             </div>
 
@@ -132,7 +158,7 @@ footer {
     gap: 2rem;
 
     img{
-        height: 4rem;
+        height: 3.5rem;
     }
 }
 

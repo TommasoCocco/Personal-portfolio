@@ -2,29 +2,26 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import Btn from "./Btn.vue";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
 
 const sections = ["home", "works", "about", "mail", "footer"];
 const activeSection = ref(0);
 
-// Scrolla alla sezione corrispondente con offset
 const scrollToSection = (index: number) => {
   const section = document.getElementById(sections[index]);
   if (section) {
     const isSpecial = isSpecialSection(index);
 
     if (isSpecial) {
-      // Calcola l'offset personalizzato
-      const offset = window.innerHeight * 0.2; // 20% della viewport height
+      const offset = window.innerHeight * 0.2;
       const targetPosition =
         section.getBoundingClientRect().top + window.scrollY - offset;
 
-      // Scrolla alla posizione calcolata
       window.scrollTo({
         top: targetPosition,
         behavior: "smooth",
       });
     } else {
-      // Scroll normale per le sezioni non speciali
       section.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
@@ -32,21 +29,18 @@ const scrollToSection = (index: number) => {
   }
 };
 
-// Determina se la sezione corrente è "speciale" (Works o Mail)
 const isSpecialSection = (index: number) => {
   return sections[index] === "works" || sections[index] === "mail";
 };
 
-// Funzione per aggiornare la sezione attiva durante lo scroll
 const updateActiveDot = () => {
   const sectionsElements = sections.map((id) =>
     document.getElementById(id) as HTMLElement
   );
 
   const footer = document.getElementById("footer");
-  const dots = document.querySelectorAll(".dots"); // Selettore dei dots
+  const dots = document.querySelectorAll(".dots");
 
-  // Aggiorna la sezione attiva
   sectionsElements.forEach((section, index) => {
     if (
       section &&
@@ -57,17 +51,14 @@ const updateActiveDot = () => {
     }
   });
 
-  // Controlla se il footer è visibile nel fondo della pagina
   if (footer) {
     const footerAtBottom =
       footer.getBoundingClientRect().bottom <= window.innerHeight &&
       footer.getBoundingClientRect().top >= 0;
 
     if (footerAtBottom) {
-      // Rimuove la classe "special" dai dots ogni volta che il footer tocca il fondo
       dots.forEach((dot) => dot.classList.remove("special"));
     } else {
-      // Ripristina la classe "special" ai dots quando il footer non è più al fondo
       dots.forEach((dot) => dot.classList.add("special"));
     }
   }
@@ -75,82 +66,94 @@ const updateActiveDot = () => {
 
 onMounted(() => {
   window.addEventListener("scroll", updateActiveDot);
-
-  // Pulizia dell'event listener
-  onUnmounted(() => {
-    window.removeEventListener("scroll", updateActiveDot);
-  });
 });
 
+onUnmounted(() => {
+  window.removeEventListener("scroll", updateActiveDot);
+});
 
+gsap.registerPlugin(ScrollTrigger);
 
+const containerHome = ref(null);
 
-const beforeEnter = (el:any) => {
-  el.style.opacity = "0";
-}
+const setupAnimations = () => {
+  const timeline = gsap.timeline({
+    defaults: { duration: 1, ease: "power3.out" },
+  });
 
-const enterTitle = (el:any) => {
-  gsap.to(el, {
-    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)", // Stato finale (visibile)
-    opacity: 1,
-    delay: 0.5,
-    duration: 1, // Durata della transizione
-    stagger: 0.5
+  const elements = {
+    line1: document.querySelector(".container__line1"),
+    title: document.querySelector(".container__box__title"),
+    subtitle: document.querySelector(".container__box__subtitle"),
+    photo: document.querySelector(".container__photo"),
+    btn: document.querySelector(".container__btn"),
+    dots: document.querySelectorAll(".dots"),
+  };
+
+  console.log("Elements found:", elements);
+
+  // Assicurati che tutti gli elementi siano presenti
+  if (!Object.values(elements).every((el) => el)) {
+    console.error("Uno o più elementi non trovati nel DOM.");
+    return;
+  }
+
+  // Imposta gli stili iniziali per simulare il comportamento di @before-enter
+  gsap.set(elements.line1, { opacity: 0, x: -50 });
+  gsap.set(elements.title, { opacity: 0, clipPath: "polygon(0 0, 0% 0, 0% 100%, 0% 100%)" });
+  gsap.set(elements.subtitle, { opacity: 0, clipPath: "polygon(0 0, 0% 0, 0% 100%, 0% 100%)"});
+  gsap.set(elements.photo, { opacity: 0, scale: 0.5 });
+  gsap.set(elements.btn, { opacity: 0, y: -20 });
+  gsap.set(elements.dots,{opacity: 0, x: 50})
+
+  timeline
+    .to(
+      elements.title,
+      {
+        clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)", 
+        opacity: 1,
+        delay: 0.5
+      },
+    )
+    .to(
+      elements.subtitle,
+      {
+        clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)", 
+        opacity: 1,
+      },
+    )
+     .to(
+      elements.photo, {
+      opacity: 1,
+      duration: 0.8,
+      scale: 1,
+    },
+    "<"
+    )
+    .to(
+    [elements.line1, elements.btn, elements.dots],
+    {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      ease: "bounce.out",
+    }, "<"
+  );
+
+  // ScrollTrigger
+  ScrollTrigger.create({
+    trigger: containerHome.value,
+    start: "top 80%",
+    end: "80% -10%",
+    animation: timeline,
+    toggleActions: "restart none restart none",
   });
 };
 
-const enterSubtitle = (el:any) => {
-  gsap.to(el, {
-    opacity: 1,
-    delay: 1.5,
-    duration: 1,
-    stagger: 0.5
-  })
-}
-
-const beforeEnterBtn = (el:any) => {
-  el.style.opacity = "0";
-  el.style.transform = "translateY(-10px)";
-}
-
-const enterBtn = (el:any) => {
-  gsap.to(el, {
-    y: 0,
-    opacity: 1,
-    delay: 1,
-    duration: 1,
-    ease: 'bounce.out'
-  })
-}
-
-const beforeEnterImg = (el:any) => {
-  el.style.opacity = "0";
-  el.style.transform = "translateX(-50px)";
-}
-
-const enterImg = (el:any) => {
-  gsap.to(el, {
-    x:0,
-    opacity: 1,
-    delay: 0.5,
-    duration: 1,
-    ease:'bounce.out'
-  })
-}
-
-const beforeEnterPhoto = (el:any) => {
-  el.style.opacity = "0";
-  el.style.scale = "0.5";
-}
-
-const enterPhoto = (el:any) => {
-  gsap.to(el,{
-    opacity: 1,
-    scale: 1,
-    delay: 0.5,
-    duration: 1,
-  })
-}
+// Setup
+onMounted(() => {
+  setupAnimations();
+});
 
 onMounted(() => {
   window.addEventListener("scroll", updateActiveDot);
@@ -158,22 +161,21 @@ onMounted(() => {
   const scrollToWorksButton = document.getElementById("scrollToWorks");
   if (scrollToWorksButton) {
     scrollToWorksButton.addEventListener("click", (event) => {
-      event.preventDefault(); // Previene lo scroll predefinito del browser
+      event.preventDefault();
 
       const target = document.getElementById("works");
       if (target) {
-        const offset = window.innerHeight * 0.2; // Calcola il 20% della viewport height
+        const offset = window.innerHeight * 0.2;
         const targetPosition = target.getBoundingClientRect().top + window.scrollY - offset;
 
         window.scrollTo({
           top: targetPosition,
-          behavior: "smooth", // Scorrimento fluido
+          behavior: "smooth",
         });
       }
     });
   }
 
-  // Pulizia dell'event listener
   onUnmounted(() => {
     window.removeEventListener("scroll", updateActiveDot);
   });
@@ -182,59 +184,30 @@ onMounted(() => {
 
 
 <template>
-  <section class="container">
+  <section class="container" ref="containerHome">
     <div class="container__line1">
-      <Transition
-        appear
-        @before-enter="beforeEnterImg"
-        @enter="enterImg"
-  
-      >
         <img src="/line-1.svg" alt="" />
-      </Transition>
     </div>
     <div class="container__box">
       <div class="container__box__container">
         <div class="container__box__title">
-          <Transition
-            appear
-            @before-enter="beforeEnter"
-            @enter="enterTitle"
-            >
-              <h1>Frontend Developer</h1>
-            </Transition>
+              <h1 >Frontend Developer</h1>
           </div>
             
         <div class="container__box__subtitle">
-          <Transition
-          appear
-          @before-enter="beforeEnter"
-          @enter="enterSubtitle"
-          >
             <p>
               I like to craft solid and scalable frontend products with great user
               experiences.
             </p>
-          </Transition>
         </div>
       </div>
 
       <div class="container__photo">
-        <Transition
-        appear
-        @before-enter="beforeEnterPhoto"
-        @enter="enterPhoto">
-          <img src="/Mask group.svg" alt="Profile photo" />
-        </Transition>
+          <img src="/canva2.jpg"  alt="Profile photo" />
       </div>
     </div>
     <div class="container__btn">
-      <Transition
-        appear
-        @before-enter="beforeEnterBtn"
-        @enter="enterBtn">
-
-        <a href="#works" id="scrollToWorks">
+        <a href="#works" id="scrollToWorks" >
           <Btn class="btn--primary">
             <p class="btn__text">Check out my work here</p>
             <font-awesome-icon
@@ -243,7 +216,6 @@ onMounted(() => {
             />
           </Btn>
         </a>
-      </Transition>
     </div>
     
     <!-- Dots Navigation -->
@@ -270,7 +242,6 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 2rem;
 
   &__box {
     width: 100%;
@@ -300,10 +271,13 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 35rem;
+    width: 35rem;
 
     & img {
-      height: 80%;
-      max-width: 100%;
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
     }
   }
 
@@ -318,7 +292,7 @@ onMounted(() => {
     justify-content: center;
     width: 100%;
     position: relative;
-    bottom: -6rem;
+    bottom: -8rem;
   }
 
   .btn__text{
@@ -396,26 +370,43 @@ onMounted(() => {
         &__btn{
             bottom: 0rem;
         }
+
+        &__box{
+          gap: 2rem;
+          &__title{
+            padding: 0 0 0 1.5rem;
+          }
+        }
     }
     .grid-item{
         padding: 0;
     }
 }
 
+@media (height < 700px){
+  .container__btn{
+    display: none;
+  }
+}
+
+@media (height < 800px){
+  .container__btn{
+    bottom: -4rem;
+  }
+}
+
 @media (width < 768px) and (height <600px){
     .container{
         height: 100dvh;
+    }
 
-        &__photo{
-            & img{
-                display: none;
-            }
-        }
+    .container__box{
+      flex-direction: row;
     }
-    .container__btn{
-        display: none;
+    .container__photo{
+      display: none;
     }
-}
+} 
 
 
 @media (min-width: 576px) and (max-width:767px){
@@ -423,9 +414,6 @@ onMounted(() => {
   &__box{
     flex-direction: row;
 
-  }
-  &__btn{
-    display: none;
   }
 }
 
@@ -435,32 +423,20 @@ onMounted(() => {
 
     h1{
         font-size: 2em;
-        line-height: 65px;
     }
 
     .container{
-        min-height: 80dvh;
 
         &__box{
             flex-direction: column;
         }
 
-        &__btn{
-            top: 0;
-        }
 
-        &__photo{
-
-            & img{
-                height: 407px;
-                width: 400px;
-            }
-        }
     }
 }
 
 
-@media all and (min-width: 480px) and (max-width: 767px) and (height < 720px){
+@media all and (min-width: 480px) and (max-width: 768px) and (height < 720px){
     h1{
         font-size: 1.5em;
     }
@@ -470,16 +446,24 @@ onMounted(() => {
         
         &__photo{
             & img{
-            height: 307px;
-            width: 300px;
+            height: 30rem;
+            width: 30rem;
+        }
+
+        &__btn{
+            display: none !important;
         }
     }
 }
 }
 
-@media (width < 800px){
+@media (width < 768px) and (height < 720px){
   .dots {
       display: none !important;
+    }
+
+    .container__btn{
+      display: none;
     }
 }
 
@@ -489,7 +473,14 @@ onMounted(() => {
         gap: 4rem;
 
         &__box{
-            gap: 2rem;
+            flex-direction: row;
+        }
+
+        &__photo{
+          & img{
+            width: 90%;
+            height: 90%;
+          }
         }
     }
     
@@ -503,7 +494,8 @@ onMounted(() => {
         }
         &__photo{
             & img{
-                height: 300px;
+                height: 30rem;
+                width: 30rem;
             }
         }
         &__btn{
@@ -511,14 +503,24 @@ onMounted(() => {
         }
     }
 }
-@media all and (min-width: 768px) and (max-width: 991px) {
-    .container{
-        &__btn{
-            bottom: 0;
-        }
-    }
-}
 
+
+@media (height > 1100px) {
+  .container{
+    height: 60dvh;
+    &__box{
+      flex-direction: row;
+    }
+
+    &__btn{
+      bottom: 0;
+    }
+
+    .dots{
+      top: 40%;
+    }
+  }
+}
 
 
 @media all and (min-width: 992px) and (max-width: 1100px) and (height < 750px){
@@ -531,13 +533,11 @@ onMounted(() => {
 }
 
 @media all and (min-width: 992px) and (max-width: 1100px){
-
-    .container{
-        &__btn{
-            bottom: 0;
+  .container{
+        &__box{
+            flex-direction: row;
         }
     }
-
 }
 
 @media (min-width: 1100px){
@@ -561,7 +561,7 @@ onMounted(() => {
         align-items: center;
         justify-content: center;
         width: 80%;
-        gap: 5rem;
+        gap: 10rem;
 
         &__container{
             position: relative;
@@ -600,5 +600,26 @@ onMounted(() => {
 
 
  
+}
+
+@media (min-width: 1100px) and (height < 500px){
+  .container__photo{
+    height: 30rem;
+    & img{
+        height: 30rem;
+        width: 30rem;
+    }
+  }
+
+ 
+}
+
+@media (min-width: 1100px) and (height < 700px){
+  .container__box{
+    align-items: center;
+  }
+  .container__box__container{
+    top: 0 !important;
+  }
 }
 </style>
