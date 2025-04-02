@@ -148,10 +148,14 @@ const bounceEffect = (event: any) => {
         </div>
       </Transition>
       </a>
-      <Btn class="btn--menu" @click="toggleMenu">
-        <font-awesome-icon :icon="['fas', 'bars']" class="container__navbar__menu__icon"/>
-      </Btn>
-
+      <Transition 
+        appear
+        @before-enter="beforeEnter"
+        @enter="enter">
+          <Btn class="btn--menu" @click="toggleMenu">
+            <font-awesome-icon :icon="['fas', 'bars']" class="container__navbar__menu__icon"/>
+          </Btn>
+      </Transition>
       <transition name="menu-panel">
         <div 
           v-if="isMenuVisible" 
