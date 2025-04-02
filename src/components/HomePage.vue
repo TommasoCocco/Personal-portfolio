@@ -203,7 +203,7 @@ onMounted(() => {
       </div>
 
       <div class="container__photo">
-          <img src="/canva2.jpg"  alt="Profile photo" />
+          <img src="/fotoprova.svg"  alt="Profile photo" />
       </div>
     </div>
     <div class="container__btn">
@@ -249,14 +249,17 @@ onMounted(() => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+    top: -3%;
+    gap: 10rem;
 
     &__title {
       display: flex;
       padding: 0 1.5rem;
       font-size: 3.2em;
       color: #dbf228;
-      align-items: flex-end;
-      height: 130px;
+      align-items: center;
+      height: 150px;
       width: 35rem;
 
     }
@@ -264,6 +267,10 @@ onMounted(() => {
     &__subtitle {
       padding: 0rem 1.5rem;
       max-width: 41.5rem;
+
+      & p {
+        margin: 0;
+      }
     }
   }
 
@@ -271,13 +278,14 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 35rem;
-    width: 35rem;
+    height: 36rem;
+    width: 36rem;
 
     & img {
       height: 100%;
       width: 100%;
       border-radius: 50%;
+      box-shadow: 0px 4px 15px #0000003d;
     }
   }
 
@@ -292,7 +300,7 @@ onMounted(() => {
     justify-content: center;
     width: 100%;
     position: relative;
-    bottom: -8rem;
+    bottom: -3rem;
   }
 
   .btn__text{
@@ -474,6 +482,7 @@ onMounted(() => {
 
         &__box{
             flex-direction: row;
+            gap: 0;
         }
 
         &__photo{
