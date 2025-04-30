@@ -475,6 +475,11 @@ onMounted(() => {
     }
 }
 
+@media (width < 768px){
+  .dots{
+    display: none;
+  }
+}
 
 @media all and (min-width: 768px) and (max-width: 991px){
     .container{
