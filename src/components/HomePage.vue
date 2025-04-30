@@ -477,7 +477,7 @@ onMounted(() => {
 
 @media (width < 768px){
   .dots{
-    display: none;
+    display: none !important;
   }
 }
 
