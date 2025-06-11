@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import Card from "./CardCarousell.vue"
+import CardCarousell from "./CardCarousell.vue"
+import CardBauli from "./CardBauli.vue"
 import Btn from "./Btn.vue"
 
 </script>
@@ -8,7 +9,10 @@ import Btn from "./Btn.vue"
     <section class="container__works">
         <div class="container__works__title"><h2>My Recent Work</h2></div>
         <div class="container__works__subtitle"><h3>Qui alcuni dei miei progetti piú recenti</h3></div>
-        <div class="container__works__card"><Card></Card></div>
+        <div class="container__works__card">
+            <CardCarousell></CardCarousell>
+            <CardBauli></CardBauli>
+        </div>
         <div class="container__works__btn"><Btn class="btn--secondary"> <a href="https://github.com/TommasoCocco/" target="_blank">See some more</a></Btn></div>
         
     </section>
@@ -40,6 +44,8 @@ import Btn from "./Btn.vue"
 
     &__card{
         margin-top: 5rem;
+        display: flex;
+        gap: 3rem;
     }
 
     &__btn{
@@ -48,6 +54,15 @@ import Btn from "./Btn.vue"
         & a{
             text-decoration: none;
             color: #212121;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container__works{
+
+        &__card{
+            flex-direction: column;
         }
     }
 }

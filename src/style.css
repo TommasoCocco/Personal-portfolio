@@ -30,7 +30,7 @@ h4{
   margin: 0;
   padding: 0;
   color: #dbf228;
-  font-family: "Inter-Black", Helvetica;
+  font-family: "Inter-Black";
   font-size: 5rem;
   font-weight: 700;
   letter-spacing: -2px;
@@ -68,6 +68,19 @@ html {
   min-height: 800px;
 }
 
+@media screen and (max-width: 480px) {
+ 
+  h1{
+    font-size: 4.8rem;
+    line-height: 4.8rem;
+  }
+  
+  h4{
+    font-size: 6.4rem;
+    line-height: 6.4rem;
+  }
+  
+}
 
 @media screen and (min-width: 980px) {
  

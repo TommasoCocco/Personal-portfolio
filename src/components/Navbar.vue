@@ -192,6 +192,13 @@ const bounceEffect = (event: any) => {
   position: fixed;
   width: 100%;
   z-index: 1;
+  height: 8rem;
+  backdrop-filter: blur(20px);
+  z-index: 5000;
+
+  /* maschera sfumata verso il basso */
+/*   -webkit-mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 90%, transparent 100%); */
 
   &__logo {
     &__text-wrapper p{

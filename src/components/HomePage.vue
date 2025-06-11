@@ -370,17 +370,10 @@ onMounted(() => {
 
         &__photo{
             height: 25rem;
-            & img{
-                width: 25rem;
-                height: 25rem;
-            }
-        }
-        &__btn{
-            bottom: 0rem;
+            width: 25rem;
         }
 
         &__box{
-          gap: 2rem;
           &__title{
             padding: 0 0 0 1.5rem;
           }
@@ -392,14 +385,21 @@ onMounted(() => {
 }
 
 @media (height < 700px){
+
+  .container__box{
+    gap: 2rem ;
+    top: 0;
+  }
   .container__btn{
-    display: none;
+    bottom: 0rem;
+    display: block;
   }
 }
 
 @media (height < 800px){
   .container__btn{
     bottom: -4rem;
+    display: flex;
   }
 }
 
@@ -436,7 +436,9 @@ onMounted(() => {
     .container{
 
         &__box{
-            flex-direction: column;
+          top: 0;
+          flex-direction: column;
+          gap: 2rem;
         }
 
 
@@ -465,15 +467,6 @@ onMounted(() => {
 }
 }
 
-@media (width < 768px) and (height < 720px){
-  .dots {
-      display: none !important;
-    }
-
-    .container__btn{
-      display: none;
-    }
-}
 
 @media (width < 768px){
   .dots{

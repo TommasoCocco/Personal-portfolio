@@ -7,7 +7,7 @@
     <div class="container" >
         <a href="https://github.com/TommasoCocco/carousel-vue" target="_blank">
             <div class="container__image">
-                <img src="/mockup.svg" alt="">
+                <img src="/img-carousell.svg" alt="">
             </div>
             <div class="container__text">
                 <p>Carousell</p>
@@ -30,6 +30,14 @@
     overflow: hidden;
     position: relative;
     transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Smooth easing */
+
+    &:hover{
+        .container__image{
+            img{
+                transform: scale(1.1);
+            }
+        }
+    }
 }
 
 .container__image {
@@ -40,15 +48,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 
     & img {
         position: relative;
         transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Smooth easing for img */
     }
 
-    &:hover img {
-        top: 0.3rem;
-    }
 }
 
 .container__text {
@@ -76,7 +82,7 @@
 
 .container:hover {
     box-shadow: 0px 4px 15px #00000026;
-    top: -0.2rem;
 }
+
 
 </style>
