@@ -6,6 +6,14 @@ import gsap from 'gsap';
 const showPopup = ref(false);
 const popup = ref(null);
 
+function bloccaScorrimento() {
+  document.body.style.overflow = 'hidden';
+}
+
+function sbloccaScorrimento() {
+  document.body.style.overflow = '';
+}
+
 const openPopup = async () => {
     showPopup.value = true;
     await nextTick();
@@ -20,6 +28,7 @@ const openPopup = async () => {
             duration: 0.3, 
         }
     );
+    bloccaScorrimento()
 };
 
 
@@ -32,6 +41,7 @@ const closePopup = () => {
       showPopup.value = false
     }
   })
+  sbloccaScorrimento()
 }
 
 
@@ -92,7 +102,6 @@ p{
     overflow: hidden;
     position: relative;
     transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Smooth easing */
-    z-index: 1000;
     
     &:hover{
         box-shadow: 0px 4px 15px #00000026;
@@ -110,6 +119,7 @@ p{
         display: flex;
         top: 0;
         left: 0;
+        z-index: 1;
         flex-direction: column;
         align-items: center;
         justify-content: end;
@@ -122,7 +132,7 @@ p{
             display: flex;
             flex-direction: column;
             justify-content: end;
-            width: 70%;
+            width: 75%;
             max-height: 90%;
             padding-bottom: 4rem;
         }
@@ -162,7 +172,7 @@ p{
                 padding: 3rem;
                 overflow: scroll;
                 scrollbar-width: none;
-                max-height: 90%;
+                max-height: 89%;
 
                 & h3{
                     font-size: 3rem;

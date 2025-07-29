@@ -45,7 +45,11 @@ import Btn from "./Btn.vue"
     &__card{
         margin-top: 5rem;
         display: flex;
+        flex-wrap: wrap;
         gap: 3rem;
+        padding: 0 2rem;
+        align-items: center;
+        justify-content: center;
     }
 
     &__btn{
@@ -58,13 +62,5 @@ import Btn from "./Btn.vue"
     }
 }
 
-@media screen and (max-width: 768px) {
-    .container__works{
-
-        &__card{
-            flex-direction: column;
-        }
-    }
-}
 
 </style>

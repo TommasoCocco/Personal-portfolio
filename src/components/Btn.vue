@@ -84,6 +84,33 @@ const hasModifiersClasses = computed(() => {
         }
     }
 
+    &--card{
+        display: flex;
+        flex-direction: row;
+        background-color: #DBF228;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+        height: 5rem;
+        width: 21rem;
+        border-radius: 1rem;
+        gap: 1rem;
+
+        & img{
+            width: 2rem;
+            height: 2rem;
+        }
+
+        & p{
+            color: #0d0d0d;
+        }
+        & a{
+            text-decoration: none;
+            color: #0d0d0d !important;   
+        }
+    }
+
 }
 
 </style>
